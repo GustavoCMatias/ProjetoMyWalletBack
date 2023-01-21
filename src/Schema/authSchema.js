@@ -7,3 +7,8 @@ export const SchemaUsuario = joi.object({
     confirmacao: joi.string().valid(joi.ref('senha')).required()
 
 })
+
+export const SchemaLogin = joi.object({
+    email: joi.string().email().required(),
+    senha: joi.string().required(),
+})
