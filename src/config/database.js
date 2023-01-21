@@ -1,11 +1,18 @@
-import {mongoClient} from "mongodb"
+import {MongoClient} from "mongodb"
 import dotenv from 'dotenv'
 
 dotenv.config()
-const mongoClient = new mongoClient(process.env.DATABASE_URL)
+const mongoClient = new MongoClient(process.env.DATABASE_URL)
 
-mongoClient.connect()
-    .then(() => {db = mongoClient.db()})
-    .catch(() => {console.log('Deu ruim')})
+let db;
+
+try{
+    await mongoClient.connect()
+    db = mongoClient.db()
+}catch(error){
+    console.log('Erro no servidor')
+}
+
+
 
 export default db
