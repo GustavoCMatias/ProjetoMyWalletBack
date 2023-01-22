@@ -1,5 +1,5 @@
 import db from "../config/database.js";
-
+import dayjs from "dayjs"
 
 export async function pegarExtrato(req, res) {
     try {
@@ -16,9 +16,10 @@ export async function pegarExtrato(req, res) {
 
 export async function adicionarRegistro(req, res){
     try{
+        const data = dayjs().format('DD/MM')
         const {valor, descricao, tipo} = req.body
         const {idUsuario} = res.locals.sessao 
-        db.collection('registros').insertOne({idUsuario, valor: Number(valor).toFixed(2), descricao, tipo})
+        db.collection('registros').insertOne({idUsuario, valor: Number(valor).toFixed(2), descricao, tipo, data})
         return res.status(201).send('Registro criado!')
 
 

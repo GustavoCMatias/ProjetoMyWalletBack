@@ -30,10 +30,10 @@ export async function Logar(req, res) {
         if (!checkSenha) return res.status(403).send('Email/senha inválido')
 
         const sessionInfo = await db.collection('sessoes').findOne({ idUsuario: dbInfo._id })
-        if (sessionInfo) return res.status(200).send(sessionInfo.token)
+        if (sessionInfo) return res.status(200).send({token: sessionInfo.token, nome: dbInfo.nome})
         const token = uuidv4()
         await db.collection('sessoes').insertOne({ idUsuario: dbInfo._id, token })
-        return res.status(200).send(token)
+        return res.status(200).send({token, nome: dbInfo.nome})
     } catch (error) {
         res.status(500).send(error.message)
     }
